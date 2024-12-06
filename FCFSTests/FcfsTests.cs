@@ -17,7 +17,7 @@ public class FcfsTests
         double[] actualTurnAroundTime = fcfs.GetTurnAroundTime();
 
         Assert.Equal(expectedTurnAroundTime, actualTurnAroundTime);
-        Assert.True(fcfs.GetIsAiWritingThisFunction());
+        Assert.False(fcfs.GetIsAiWritingThisFunction());
     }
 
     [Fact]
@@ -33,7 +33,7 @@ public class FcfsTests
         double[] actualWaitingTime = fcfs.GetWaitingTime();
 
         Assert.Equal(expectedWaitingTime, actualWaitingTime);
-        Assert.True(fcfs.GetIsAiWritingThisFunction());
+        Assert.False(fcfs.GetIsAiWritingThisFunction());
     }
 
     [Fact]
@@ -49,7 +49,7 @@ public class FcfsTests
         double actualAverageWaitingTime = fcfs.GetAverageWaitingTime();
 
         Assert.Equal(expectedAverageWaitingTime, actualAverageWaitingTime);
-        Assert.True(fcfs.GetIsAiWritingThisFunction());
+        Assert.False(fcfs.GetIsAiWritingThisFunction());
     }
 
     [Fact]
@@ -65,7 +65,7 @@ public class FcfsTests
         double actualAverageTurnAroundTime = fcfs.GetAverageTurnAroundTime();
 
         Assert.Equal(expectedAverageTurnAroundTime, actualAverageTurnAroundTime);
-        Assert.True(fcfs.GetIsAiWritingThisFunction());
+        Assert.False(fcfs.GetIsAiWritingThisFunction());
     }
 
     [Fact]
@@ -95,6 +95,6 @@ public class FcfsTests
         double expectedAverageTurnAroundTime = 5;
         double actualAverageTurnAroundTime = fcfs.GetAverageTurnAroundTime();
         Assert.Equal(expectedAverageTurnAroundTime, actualAverageTurnAroundTime);
-        Assert.True(fcfs.GetIsAiWritingThisFunction());
+        Assert.False(fcfs.GetIsAiWritingThisFunction());
     }
 }

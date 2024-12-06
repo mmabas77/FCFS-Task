@@ -1,0 +1,89 @@
+name: Autograding Tests
+
+on:
+  - push
+  - workflow_dispatch
+  - repository_dispatch
+
+permissions:
+  checks: write
+  actions: read
+  contents: read
+
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Unit Test: TestTurnAroundTime
+      - name: test_turn_around_time
+        id: test_turn_around_time
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: test_turn_around_time
+          setup-command: ""
+          command: "DOTNET_CLI_HOME=/home/runner dotnet test --filter TestGroup=TestTurnAroundTime"
+          timeout: 1
+          max-score: 1
+
+      # Unit Test: TestWaitingTime
+      - name: test_waiting_time
+        id: test_waiting_time
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: test_waiting_time
+          setup-command: ""
+          command: "DOTNET_CLI_HOME=/home/runner dotnet test --filter TestGroup=TestWaitingTime"
+          timeout: 1
+          max-score: 1
+
+      # Unit Test: TestAverageWaitingTime
+      - name: test_average_waiting_time
+        id: test_average_waiting_time
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: test_average_waiting_time
+          setup-command: ""
+          command: "DOTNET_CLI_HOME=/home/runner dotnet test --filter TestGroup=TestAverageWaitingTime"
+          timeout: 1
+          max-score: 1
+
+      # Unit Test: TestAverageTurnAroundTime
+      - name: test_average_turn_around_time
+        id: test_average_turn_around_time
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: test_average_turn_around_time
+          setup-command: ""
+          command: "DOTNET_CLI_HOME=/home/runner dotnet test --filter TestGroup=TestAverageTurnAroundTime"
+          timeout: 1
+          max-score: 1
+
+      # Unit Test: TestSingleProcess
+      - name: test_single_process
+        id: test_single_process
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: test_single_process
+          setup-command: ""
+          command: "DOTNET_CLI_HOME=/home/runner dotnet test --filter TestGroup=TestSingleProcess"
+          timeout: 1
+          max-score: 1
+
+      # Autograding Reporter with multiple tests
+      - name: Autograding Reporter
+        uses: classroom-resources/autograding-grading-reporter@v1
+        env:
+          TEST_TURN_AROUND_TIME_RESULTS: "${{ steps.test_turn_around_time.outputs.result }}"
+          TEST_WAITING_TIME_RESULTS: "${{ steps.test_waiting_time.outputs.result }}"
+          TEST_AVERAGE_WAITING_TIME_RESULTS: "${{ steps.test_average_waiting_time.outputs.result }}"
+          TEST_AVERAGE_TURN_AROUND_TIME_RESULTS: "${{ steps.test_average_turn_around_time.outputs.result }}"
+          TEST_SINGLE_PROCESS_RESULTS: "${{ steps.test_single_process.outputs.result }}"
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          runners: test_turn_around_time,test_waiting_time,test_average_waiting_time,test_average_turn_around_time,test_single_process
